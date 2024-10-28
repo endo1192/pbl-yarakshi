@@ -12,6 +12,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+
+    //add
+    "target": "es2015",
+    "downlevelIteration": true,
+
     "paths": {
       "@/*": ["./src/*"]
     }

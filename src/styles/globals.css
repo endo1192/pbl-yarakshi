@@ -5,8 +5,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #e7fffa;
+    --foreground: #08082e;
   }
 }
 
@@ -39,4 +39,18 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+p {
+  text-align: center;
+  font-size: 40px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+li {
+  text-align: center;
 }
