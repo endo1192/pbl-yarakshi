@@ -7,6 +7,7 @@ interface Bques1Props {
   answer: number[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getServerSideProps({ req }: any) {
   // リクエストのURLからクエリパラメータを取得する
   const query = new URL(req.url || '', `http://${req.headers.host}`).searchParams;

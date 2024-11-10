@@ -106,6 +106,7 @@ export default function Bans1({ num, count, arrayn, answer }: Bans1Props) {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getServerSideProps({ req }: any) {
   // リクエストのURLからクエリパラメータを取得する
   const query = new URL(req.url || '', `http://${req.headers.host}`).searchParams;
