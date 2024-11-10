@@ -52,7 +52,7 @@ const BabylonScene = () => {
     BABYLON.Engine.CollisionsEpsilon = 0.0001;
     camera.inertia = 0.8;
     
-    // @ts-ignore
+    // @ts-expect-error
     const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
 
     let isJumping = false;
