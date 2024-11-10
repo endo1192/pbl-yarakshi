@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 const BabylonScene = () => {
   const canvasRef = useRef(null);
-  const engineRef = useRef(null);
+  //const engineRef = useRef(null);
 
   const router = useRouter();
 
@@ -52,11 +52,11 @@ const BabylonScene = () => {
     BABYLON.Engine.CollisionsEpsilon = 0.0001;
     camera.inertia = 0.8;
 
-    const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+    //const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
 
     let isJumping = false;
-        let jumpSpeed = 0.3;  
-        let jumpHeight = 2.1;   
+        const jumpSpeed = 0.3;  
+        const jumpHeight = 2.1;   
         //let initialYPosition = camera.position.y;  
 
 
@@ -134,7 +134,7 @@ const BabylonScene = () => {
         });
 
         advancedTexture.addControl(jumpButton);
-        let joystickContainer = document.createElement("div") as HTMLDivElement;
+        const joystickContainer = document.createElement("div") as HTMLDivElement;
         joystickContainer.style.position = "absolute";
         joystickContainer.style.left = "100px";
         joystickContainer.style.bottom = "100px";
@@ -144,7 +144,7 @@ const BabylonScene = () => {
         joystickContainer.style.borderRadius = "50%";
         document.body.appendChild(joystickContainer);
 
-        let joystickPuck = document.createElement("div");
+        const joystickPuck = document.createElement("div");
         joystickPuck.style.position = "absolute";
         joystickPuck.style.left = "40px";
         joystickPuck.style.top = "40px";
@@ -172,12 +172,12 @@ const BabylonScene = () => {
                 const touch = event.touches[0]; 
                 let deltaX = touch.clientX - initialTouchPoint.x;
                 let deltaY = touch.clientY - initialTouchPoint.y;
-                let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                let maxDistance = 50;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const maxDistance = 50;
 
                 
                 if (distance > maxDistance) {
-                    let angle = Math.atan2(deltaY, deltaX);
+                    const angle = Math.atan2(deltaY, deltaX);
                     deltaX = Math.cos(angle) * maxDistance;
                     deltaY = Math.sin(angle) * maxDistance;
                 }
@@ -206,8 +206,8 @@ const BabylonScene = () => {
             if (isDraggingJoystick) {
                 let deltaX = event.clientX - initialTouchPoint.x;
                 let deltaY = event.clientY - initialTouchPoint.y;
-                let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                let maxDistance = 50;  
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const maxDistance = 50;  
 
                 
                 /*if (distance > maxDistance) {
@@ -217,7 +217,7 @@ const BabylonScene = () => {
                 }*/
 
                 
-                let angle = Math.atan2(deltaY, deltaX);
+                const angle = Math.atan2(deltaY, deltaX);
                 if (distance > maxDistance) {
                     deltaX = Math.cos(angle) * maxDistance;
                     deltaY = Math.sin(angle) * maxDistance;
@@ -257,8 +257,8 @@ const BabylonScene = () => {
 
         canvas.addEventListener("pointermove", (event) => {
             if (isRotatingCamera) {
-                let deltaX = event.clientX - previousPointerPosition.x;
-                let deltaY = event.clientY - previousPointerPosition.y;
+                const deltaX = event.clientX - previousPointerPosition.x;
+                const deltaY = event.clientY - previousPointerPosition.y;
 
                 camera.rotation.y += deltaX * 0.002;
                 camera.rotation.x += deltaY * 0.002;
@@ -355,7 +355,7 @@ const BabylonScene = () => {
                     
                     if(pointerInfo.pickInfo && pointerInfo.pickInfo.hit) {
                         console.log("clicked");
-                        let pickedMesh = pointerInfo.pickInfo.pickedMesh;
+                        const pickedMesh = pointerInfo.pickInfo.pickedMesh;
                         //let pointerId = pointerInfo.event.pointerId;
 
                         if(pickedMesh){
@@ -404,7 +404,7 @@ const BabylonScene = () => {
     return () => {
       engine.dispose();
     };
-  }, []);
+  }, [router]);
 
   return <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
 };

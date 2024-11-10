@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 interface Bques1Props {
@@ -45,10 +44,10 @@ export default function Bans1({ arrayn, answer }: Bques1Props) {
   
 
 
-  let Carray = arrayn;
-  let Canswer = answer;
+  const Carray = arrayn;
+  const Canswer = answer;
 
-  let Kaito: string[] = ["d","d","d","d","d","d","d","d","d","d"]
+  const Kaito: string[] = ["d","d","d","d","d","d","d","d","d","d"]
 
   for(let i = 0;i<=9;i++){
     if(Canswer[i] == 0){
@@ -58,7 +57,7 @@ export default function Bans1({ arrayn, answer }: Bques1Props) {
     }else{Kaito[i] = "error"}
   }
 
-  let Kaisetsu: string[] = ["d","d","d","d","d","d","d","d","d","d"]
+  const Kaisetsu: string[] = ["d","d","d","d","d","d","d","d","d","d"]
 
   for(let i = 0;i<=9;i++){
     switch(Carray[i]){

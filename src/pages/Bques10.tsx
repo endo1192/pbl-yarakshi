@@ -48,8 +48,8 @@ export async function getServerSideProps({ req }: any) {
 export default function Home({ count, arrayn, answer }: Bques1Props) {
   
 
-  let Carray = arrayn;
-  let Canswer = answer;
+  const Carray = arrayn;
+  const Canswer = answer;
 
   const Fnumber = count;
 

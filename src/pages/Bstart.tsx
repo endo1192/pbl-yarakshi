@@ -4,9 +4,9 @@ const shuffleArray = (array: number[]) => {
   const cloneArray = [...array]
 
   for(let i = cloneArray.length - 1; i>=0; i--){
-    let rand = Math.floor(Math.random() * (i+1))
+    const rand = Math.floor(Math.random() * (i+1))
 
-    let tmpStorage = cloneArray[i]
+    const tmpStorage = cloneArray[i]
     cloneArray[i] = cloneArray[rand]
     cloneArray[rand] = tmpStorage
   }
@@ -15,15 +15,15 @@ const shuffleArray = (array: number[]) => {
 }
 
 export default function Home() {
-  let array: number[];
-  array = [1,2,3,4,5,6,7,8,9,10]
+  //let array: number[];
+  const array = [1,2,3,4,5,6,7,8,9,10]
 
   const arrayn = shuffleArray(array)
 
   const pagen = arrayn[0]
 
-  let answer: number[];
-  answer = [0,0,0,0,0,0,0,0,0,0]
+  //let answer: number[];
+  const answer = [0,0,0,0,0,0,0,0,0,0]
 
   return (
     <>

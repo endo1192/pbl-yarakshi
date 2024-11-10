@@ -12,8 +12,8 @@ export default function Bans1({ num, count, arrayn, answer }: Bans1Props) {
   const [showPopup, setShowPopup] = useState(false);
 
   const Cnumber = count;
-  let Carray = arrayn;
-  let Canswer = answer;
+  const Carray = arrayn;
+  const Canswer = answer;
 
   let pagen = Carray[Cnumber];
 
