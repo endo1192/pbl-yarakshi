@@ -20,7 +20,7 @@ export default function Home() {
         <br /><br /><br /><br /><br /><br />
         <p>情報リテラシー</p>
         <p>やらかし事例クイズ</p>
-        <Link href="/StartWorld"><Image src="../images/start.png" alt="background" /></Link>
+        <Link href="/StartWorld"><Image src="/images/start.png" alt="background" width={300}height={120} /></Link>
         {/*<p><Link href="/Bstart">beginerコース</Link></p>*/}
           
 

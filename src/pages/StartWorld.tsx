@@ -51,8 +51,9 @@ const BabylonScene = () => {
     camera.speed = 1.5;
     BABYLON.Engine.CollisionsEpsilon = 0.0001;
     camera.inertia = 0.8;
-
-    //const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+    
+    // @ts-ignore
+    const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
 
     let isJumping = false;
         const jumpSpeed = 0.3;  
