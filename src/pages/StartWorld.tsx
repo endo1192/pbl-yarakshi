@@ -404,7 +404,7 @@ const BabylonScene = () => {
     return () => {
       engine.dispose();
     };
-  }, [router]);
+  }, []);
 
   return <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
 };
