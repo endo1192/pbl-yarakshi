@@ -16,9 +16,12 @@ export default function Home() {
       
         <main className={styles.main}>
           
+        <br /><br /><br /><br /><br /><br />
+        <p>情報リテラシー</p>
+        <p>やらかし事例クイズ</p>
+        <Link href="/StartWorld"><img src="../images/start.png"></img></Link>
+        {/*<p><Link href="/Bstart">beginerコース</Link></p>*/}
           
-          <p><Link href="/StartWorld">meta</Link></p><br /><br /><br />
-          <p><Link href="/Bstart">beginerコース</Link></p>
 
           
         </main>

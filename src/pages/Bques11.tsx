@@ -1,40 +1,52 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-export default function Bans1() {
-  const router = useRouter();
-  const { arrayn,answer } = router.query;
+interface Bques1Props {
+  arrayn: number[];
+  answer: number[];
+}
+
+export async function getServerSideProps({ req }: any) {
+  // リクエストのURLからクエリパラメータを取得する
+  const query = new URL(req.url || '', `http://${req.headers.host}`).searchParams;
 
 
-  // クエリパラメータarraynが文字列であればJSON.parseする
-  let Carray: number[] = [];
   
-  if (typeof arrayn === 'string') {
+  // arraynとanswerをパース
+  let Carray: number[] = [];
+  const arrayn = query.get('arrayn');
+  if (arrayn) {
     try {
-      Carray = JSON.parse(arrayn);  // JSON文字列をパース
+      Carray = JSON.parse(arrayn);
     } catch (error) {
       console.error("Failed to parse arrayn:", error);
     }
-  } else if (Array.isArray(arrayn)) {
-    Carray = arrayn.map(num => parseInt(num, 10));  // string[]をnumber[]に変換
   }
-
 
   let Canswer: number[] = [];
-  
-  if (typeof answer === 'string') {
+  const answer = query.get('answer');
+  if (answer) {
     try {
-      Canswer = JSON.parse(answer);  // JSON文字列をパース
+      Canswer = JSON.parse(answer);
     } catch (error) {
-      console.error("Failed to parse arrayn:", error);
+      console.error("Failed to parse answer:", error);
     }
-  } else if (Array.isArray(answer)) {
-    Canswer = answer.map(num => parseInt(num, 10));  // string[]をnumber[]に変換
   }
 
-  /*let Carray = Array.isArray(arrayn)
-    ? arrayn.map(num => parseInt(num, 10))
-    : [];*/
+  return {
+    props: {
+      arrayn: Carray,
+      answer: Canswer,
+    },
+  };
+}
+
+export default function Bans1({ arrayn, answer }: Bques1Props) {
+  
+
+
+  let Carray = arrayn;
+  let Canswer = answer;
 
   let Kaito: string[] = ["d","d","d","d","d","d","d","d","d","d"]
 

@@ -1,77 +1,145 @@
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Link from 'next/link';
 
-export default function Bans1() {
-  const router = useRouter();
-  const { num,count,arrayn,answer } = router.query;
+interface Bans1Props {
+  num: string;
+  count: number;
+  arrayn: number[];
+  answer: number[];
+}
 
-  const Cnumber = count ? parseInt(count as string, 10) : 0;
+export default function Bans1({ num, count, arrayn, answer }: Bans1Props) {
+  const [showPopup, setShowPopup] = useState(false);
 
+  const Cnumber = count;
+  let Carray = arrayn;
+  let Canswer = answer;
 
+  let pagen = Carray[Cnumber];
 
-  // クエリパラメータarraynが文字列であればJSON.parseする
-  let Carray: number[] = [];
-  
-  if (typeof arrayn === 'string') {
-    try {
-      Carray = JSON.parse(arrayn);  // JSON文字列をパース
-    } catch (error) {
-      console.error("Failed to parse arrayn:", error);
-    }
-  } else if (Array.isArray(arrayn)) {
-    Carray = arrayn.map(num => parseInt(num, 10));  // string[]をnumber[]に変換
-  }
-
-
-  let Canswer: number[] = [];
-  
-  if (typeof answer === 'string') {
-    try {
-      Canswer = JSON.parse(answer);  // JSON文字列をパース
-    } catch (error) {
-      console.error("Failed to parse arrayn:", error);
-    }
-  } else if (Array.isArray(answer)) {
-    Canswer = answer.map(num => parseInt(num, 10));  // string[]をnumber[]に変換
-  }
-
-  /*let Carray = Array.isArray(arrayn)
-    ? arrayn.map(num => parseInt(num, 10))
-    : [];*/
-
-  let pagen = Carray[Cnumber]
-
-  if(Cnumber > 9){
+  if (Cnumber > 9) {
     pagen = 11;
   }
 
-
-
-
-
   let answ = null;
 
-  if(num == "1"){
+  if (num === "1") {
     answ = "正解です！";
     Canswer[Cnumber - 1] = 1;
-  }else if(num == "2"){
+  } else if (num === "2") {
     answ = "残念、不正解です";
-  }else if(num == "3"){
+  } else if (num === "3") {
     answ = "残念、不正解です";
-  }else if(num == "4"){
+  } else if (num === "4") {
     answ = "残念、不正解です";
-  }else{
-    console.log("error")
+  } else {
+    console.log("error");
   }
 
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
   return (
-    <div>
-        <Link href="/">はじめに戻る</Link><br /><br /><br />
+    <div className="answer">
+      <Link href="/">はじめに戻る</Link>
+      <br />
+      <br />
+      <br />
       <h1>{Cnumber}mon,正解発表,8</h1>
-      <p>選択された回答: {num}</p><br /><br />
+      <p>選択された回答: {num}</p>
+      <br />
+      <br />
       <p>結果: {answ}</p>
-      <p>{Canswer}</p>
-      <Link href={{ pathname: `/Bques${pagen}`, query: { arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}><h1>next</h1></Link>
+      <p>{JSON.stringify(Canswer)}</p>
+
+      <button onClick={togglePopup}>解説を見る</button>
+
+      <br />
+      <br />
+      <Link
+        href={{
+          pathname: `/Bques${pagen}`,
+          query: {
+            arrayn: JSON.stringify(Carray),
+            count: Cnumber,
+            answer: JSON.stringify(Canswer),
+          },
+        }}
+      >
+        <h1>次の問題に進む</h1>
+      </Link>
+
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <button onClick={togglePopup}>閉じる</button>
+            <img src="./images/signal.jpg" alt="ポップアップ画像" />
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        .popup {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .popup-content {
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          text-align: center;
+        }
+        img {
+          width: 50%;
+          height: 50%;
+        }
+      `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }: any) {
+  // リクエストのURLからクエリパラメータを取得する
+  const query = new URL(req.url || '', `http://${req.headers.host}`).searchParams;
+
+  const num = query.get('num') || "0";
+  const count = query.get('count') ? parseInt(query.get('count') as string, 10) : 0;
+  
+  // arraynとanswerをパース
+  let Carray: number[] = [];
+  const arrayn = query.get('arrayn');
+  if (arrayn) {
+    try {
+      Carray = JSON.parse(arrayn);
+    } catch (error) {
+      console.error("Failed to parse arrayn:", error);
+    }
+  }
+
+  let Canswer: number[] = [];
+  const answer = query.get('answer');
+  if (answer) {
+    try {
+      Canswer = JSON.parse(answer);
+    } catch (error) {
+      console.error("Failed to parse answer:", error);
+    }
+  }
+
+  return {
+    props: {
+      num,
+      count,
+      arrayn: Carray,
+      answer: Canswer,
+    },
+  };
 }

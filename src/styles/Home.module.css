@@ -27,11 +27,35 @@
   }
 }
 
+@import url('https://fonts.googleapis.com/earlyaccess/kokoro.css" rel="stylesheet');
+
 .main {
   display: flex;
   flex-direction: column;
+  margin: auto;
   gap: 32px;
   grid-row-start: 2;
+  min-height: 100vh; /* ビューポートの高さ全体をカバーする */
+  width: 100%; /* 横幅を全体に */
+  background-image: url(../../public/images/011.jpg);
+  background-size: cover;
+
+  /*@media (min-aspect-ratio: 3/4) {
+    
+    background-image: url(../../public/images/003.jpg);
+  }
+  
+  @media (min-aspect-ratio: 1/2) and (max-aspect-ratio: 3/4) {
+    
+    background-image: url(/images/001.jpg);
+  }
+  
+  @media (max-aspect-ratio: 1/2) {
+    
+    background-image: url(/images/002.jpg);
+  }  */
+
+  font-family:  "Kokoro";
 }
 
 .main ol {
@@ -54,6 +78,13 @@
   padding: 2px 4px;
   border-radius: 4px;
   font-weight: 600;
+}
+
+.main img {
+  width: 50%;
+  margin: auto;
+  display: block;
+  max-width: 400px;
 }
 
 .ctas {

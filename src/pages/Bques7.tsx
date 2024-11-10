@@ -1,52 +1,61 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 
-export default function Home() {
+interface Bques1Props {
+  count: number;
+  arrayn: number[];
+  answer: number[];
+}
+
+export async function getServerSideProps({ req }: any) {
+  // リクエストのURLからクエリパラメータを取得する
+  const query = new URL(req.url || '', `http://${req.headers.host}`).searchParams;
+
   
-  const router = useRouter();
-  let { count,arrayn,answer } = router.query;
+  const count = query.get('count') ? parseInt(query.get('count') as string, 10) : 0;
+  
+  // arraynとanswerをパース
+  let Carray: number[] = [];
+  const arrayn = query.get('arrayn');
+  if (arrayn) {
+    try {
+      Carray = JSON.parse(arrayn);
+    } catch (error) {
+      console.error("Failed to parse arrayn:", error);
+    }
+  }
 
-  const Fnumber = count ? parseInt(count as string, 10) : 0;
+  let Canswer: number[] = [];
+  const answer = query.get('answer');
+  if (answer) {
+    try {
+      Canswer = JSON.parse(answer);
+    } catch (error) {
+      console.error("Failed to parse answer:", error);
+    }
+  }
+
+  return {
+    props: {
+      count,
+      arrayn: Carray,
+      answer: Canswer,
+    },
+  };
+}
+
+
+export default function Home({ count, arrayn, answer }: Bques1Props) {
+  
+
+  let Carray = arrayn;
+  let Canswer = answer;
+
+  const Fnumber = count;
 
   const Cnumber = Fnumber + 1
 
-  
 
-
-  //let Carray = Array.isArray(arrayn)
-  //  ? arrayn.map(num => parseInt(num, 10))
-  //  : [];
-
-    // クエリパラメータarraynが文字列であればJSON.parseする
-  let Carray: number[] = [];
-  
-  if (typeof arrayn === 'string') {
-    try {
-      Carray = JSON.parse(arrayn);  // JSON文字列をパース
-    } catch (error) {
-      console.error("Failed to parse arrayn:", error);
-    }
-  } else if (Array.isArray(arrayn)) {
-    Carray = arrayn.map(num => parseInt(num, 10));  // string[]をnumber[]に変換
-  }
-
-
-
-  let Canswer: number[] = [];
-
-  if (typeof answer === 'string') {
-    try {
-      Canswer = JSON.parse(answer);  // JSON文字列をパース
-    } catch (error) {
-      console.error("Failed to parse arrayn:", error);
-    }
-  } else if (Array.isArray(answer)) {
-    Canswer = answer.map(num => parseInt(num, 10));  // string[]をnumber[]に変換
-  }
-
-  
-  
 
   return ( 
     <>

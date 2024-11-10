@@ -3,10 +3,13 @@ import * as BABYLON from 'babylonjs';
 import 'babylonjs-loaders';
 import 'babylonjs-gui';
 import { AdvancedDynamicTexture, Button, Control } from 'babylonjs-gui';
+import { useRouter } from 'next/router';
 
 const BabylonScene = () => {
   const canvasRef = useRef(null);
   const engineRef = useRef(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     // シーンの初期化
@@ -23,7 +26,7 @@ const BabylonScene = () => {
     scene.gravity = new BABYLON.Vector3(0, -0.9, 0);
 
     // カメラとライトを設定
-    const camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(3, 2, 0), scene);
+    const camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(3, 2, 30), scene);
     /*const camera = new BABYLON.ArcRotateCamera(
       "camera1",
       Math.PI / 2,
@@ -309,26 +312,83 @@ const BabylonScene = () => {
         });
 
     // メッシュの読み込み
-    let Cube = null;
+    //let Cube = null;
 
-    BABYLON.SceneLoader.ImportMeshAsync("", "./scene/", "sado5.glb", scene).then((result) => {
+    //let Bdoor: BABYLON.AbstractMesh | null = null;
+
+    let Bdoor: BABYLON.AbstractMesh | null | undefined;
+
+
+    //if (someCondition) {
+    //    Bdoor = mesh ?? null; // undefined の場合は null に設定
+    //  }
+
+    BABYLON.SceneLoader.ImportMeshAsync("", "./scene/", "sinden.glb", scene).then((result) => {
         result.meshes.forEach((mesh) => {
             console.log("Loaded mesh name:", mesh.name);
         });
         
-        Cube = result.meshes.find(mesh => mesh.name === "Cube.132");
-        if (!Cube) {
-            console.error("Cube mesh not found in the loaded scene.");
-        }
+        //Cube = result.meshes.find(mesh => mesh.name === "Cube.132");
+        //if (!Cube) {
+        //    console.error("Cube mesh not found in the loaded scene.");
+        //}
 
-        for (let i = 1; i <= 6; i++) {
-            const meshName = `coli.00${i}`;
+        for (let i = 0; i <= 4; i++) {
+            const meshName = `Cube${i}`;
             const mesh = result.meshes.find(mesh => mesh.name === meshName);
             if (mesh) {
                 mesh.checkCollisions = true;
             }
         }
+
+        Bdoor = result.meshes.find(mesh => mesh.name === "Bdoor");
+        if (!Bdoor) {
+            console.error("Bdoor mesh not found in the loaded scene.");
+        }
     });
+
+    const pointerToKey = new Map()    
+
+        scene.onPointerObservable.add((pointerInfo) => {
+            switch (pointerInfo.type) {
+                case BABYLON.PointerEventTypes.POINTERDOWN://クリックが押されたときの判定
+                    
+                    if(pointerInfo.pickInfo && pointerInfo.pickInfo.hit) {
+                        console.log("clicked");
+                        let pickedMesh = pointerInfo.pickInfo.pickedMesh;
+                        //let pointerId = pointerInfo.event.pointerId;
+
+                        if(pickedMesh){
+
+                          const pointerEvent = pointerInfo.event as PointerEvent;
+                          const pointerId = pointerEvent.pointerId;
+
+                          if (Bdoor && pickedMesh === Bdoor) {//メッシュ名判定
+                              console.log("hihatop!");
+                              pickedMesh.position.y -= 0.1; 
+
+                              // Next.jsのページ遷移
+                              router.push('/Bstart').catch((error: Error) => {
+                                  console.error("Link failed:", error);
+                              }); // '/your-page-path' を目的のページパスに置き換える
+
+                              /*hihatopaudio.play().catch((error: Error) => {
+                                  console.error("Audio failed:", error);
+                              });*/
+                              pointerToKey.set(pointerId, {
+                                  mesh: pickedMesh
+                              });
+                          }
+                        }
+                    }
+                    break;
+                case BABYLON.PointerEventTypes.POINTERUP://クリックが離されたときの判定
+                    
+                    
+                    
+                    break;
+            }
+        });
 
     // シーンのレンダリング
     engine.runRenderLoop(() => {

@@ -43,8 +43,19 @@ a {
 
 p {
   text-align: center;
-  font-size: 40px;
+  font-size: 25px;
   font-family: 'Times New Roman', Times, serif;
+  @media (min-width: 1000px) {
+    font-size: 40px;
+  }
+
+  @media (min-width: 544px) and (max-width: 999px) {
+    font-size: 35px; /* 768pxから1199pxの画面幅に対してフォントサイズを設定 */
+  }
+
+  @media (min-width: 380px) and (max-width: 543px) {
+    font-size: 30px; /* 768pxから1199pxの画面幅に対してフォントサイズを設定 */
+  }
 }
 
 h1 {
@@ -52,5 +63,14 @@ h1 {
 }
 
 li {
+  text-align: center;
+}
+
+button {
+  text-align: center;
+  margin: auto;
+}
+
+.answer {
   text-align: center;
 }
