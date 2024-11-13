@@ -60,14 +60,15 @@ export default function Home({ count, arrayn, answer }: Bques1Props) {
 
   return ( 
     <>
-      <Link href="/">はじめに戻る</Link><br /><br /><br />
+      <Link href="/">はじめに戻る</Link><br />
+      <p>パスワードを設定しよう </p><br /><br />
       <p>第{Cnumber}問7、～</p><br /><br /><br />
       <p>{Carray}</p>
       <p>{Canswer}</p>
       <li>
-      <Link href={{ pathname: '/Bans7', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢1</Link></li><br />
-      <li><Link href={{ pathname: '/Bans7', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢2</Link></li><br />
-      <li><Link href={{ pathname: '/Bans7', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢3</Link></li><br />
+      <Link href={{ pathname: '/Bans7', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>1自分にしかわからないパスワードにする </Link></li><br />
+      <li><Link href={{ pathname: '/Bans7', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>2:生年月日に設定する</Link></li><br />
+      <li><Link href={{ pathname: '/Bans7', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>3:覚えやすいので、他のサイトでも使っているパスワードと同じパスワードを設定する。 </Link></li><br />
       <li><Link href={{ pathname: '/Bans7', query: { num: 4, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢4</Link>
       </li>
     </>

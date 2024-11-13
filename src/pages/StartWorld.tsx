@@ -4,6 +4,7 @@ import 'babylonjs-loaders';
 import 'babylonjs-gui';
 import { AdvancedDynamicTexture, Button, Control } from 'babylonjs-gui';
 import { useRouter } from 'next/router';
+import styled from "styled-components";
 
 const BabylonScene = () => {
   const canvasRef = useRef(null);
@@ -17,24 +18,22 @@ const BabylonScene = () => {
     const engine = new BABYLON.Engine(canvas, true);
     const scene = new BABYLON.Scene(engine);
 
-    // canvas が null でないことを確認
+    
     if (!canvas) {
       console.error("Canvas is null.");
-      return; // 何もしない
+      return; 
     }
+
+    
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
 
     scene.gravity = new BABYLON.Vector3(0, -0.9, 0);
 
-    // カメラとライトを設定
+    
     const camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(3, 2, 30), scene);
-    /*const camera = new BABYLON.ArcRotateCamera(
-      "camera1",
-      Math.PI / 2,
-      Math.PI / 4,
-      4,
-      new BABYLON.Vector3(0, 0, 0),
-      scene
-    );*/
+    
     camera.attachControl(canvas, true);
     camera.inputs.addMouseWheel();
         
@@ -57,46 +56,35 @@ const BabylonScene = () => {
     console.log(light); 
 
     let isJumping = false;
-        const jumpSpeed = 0.3;  
-        const jumpHeight = 2.1;   
-        //let initialYPosition = camera.position.y;  
+    const jumpSpeed = 0.3;  
+    const jumpHeight = 2.1;   
+    
+
+    const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+    const jumpButton = Button.CreateSimpleButton("jumpButton", "Jump");
+    jumpButton.width = "150px";
+    jumpButton.height = "40px";
+    jumpButton.color = "white";
+    jumpButton.background = "green";
 
 
         
-        /*const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    jumpButton.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    jumpButton.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
+    jumpButton.left = "-20px"; 
+    jumpButton.top = "-20px"; 
 
         
-        const jumpButton = BABYLON.GUI.Button.CreateSimpleButton("jumpButton", "Jump");
-        jumpButton.width = "150px";
-        jumpButton.height = "40px";
-        jumpButton.color = "white";
-        jumpButton.background = "green";*/
+    let jumpVelocity = 0; 
 
-        const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-        const jumpButton = Button.CreateSimpleButton("jumpButton", "Jump");
-        jumpButton.width = "150px";
-        jumpButton.height = "40px";
-        jumpButton.color = "white";
-        jumpButton.background = "green";
-
-
-        
-        jumpButton.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        jumpButton.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
-        jumpButton.left = "-20px"; 
-        jumpButton.top = "-20px"; 
-
-        
-        let jumpVelocity = 0; 
-
-        jumpButton.onPointerUpObservable.add(() => {
-            console.log("Jump button pressed");
-            if (!isJumping) {
-                isJumping = true;
-                jumpVelocity = jumpSpeed; 
-            }
-        });
+    jumpButton.onPointerUpObservable.add(() => {
+        console.log("Jump button pressed");
+        if (!isJumping) {
+            isJumping = true;
+            jumpVelocity = jumpSpeed; 
+        }
+    });
 
         
         scene.registerBeforeRender(() => {
@@ -136,6 +124,11 @@ const BabylonScene = () => {
         });
 
         advancedTexture.addControl(jumpButton);
+
+
+        
+
+
         const joystickContainer = document.createElement("div") as HTMLDivElement;
         joystickContainer.style.position = "absolute";
         joystickContainer.style.left = "100px";
@@ -145,6 +138,17 @@ const BabylonScene = () => {
         joystickContainer.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
         joystickContainer.style.borderRadius = "50%";
         document.body.appendChild(joystickContainer);
+
+        /*const joystickContainer = new GUI.Rectangle();
+        joystickContainer.width = "100px"; // Width of the joystick container
+        joystickContainer.height = "100px"; // Height of the joystick container
+        joystickContainer.color = "white"; // Border color of the joystick
+        joystickContainer.thickness = 0; // No border thickness
+        joystickContainer.background = "rgba(0, 0, 0, 0.5)"; // Background color
+        joystickContainer.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        joystickContainer.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        joystickContainer.left = "10px"; // Left margin
+        joystickContainer.top = "-10px"; // Top margin*/
 
         const joystickPuck = document.createElement("div");
         joystickPuck.style.position = "absolute";
@@ -156,11 +160,36 @@ const BabylonScene = () => {
         joystickPuck.style.borderRadius = "50%";
         joystickContainer.appendChild(joystickPuck);
 
+        /*const joystickPuck = new GUI.Ellipse();
+joystickPuck.width = "20px"; // Width of the joystick puck
+joystickPuck.height = "20px"; // Height of the joystick puck
+joystickPuck.background = "gray"; // Background color
+joystickPuck.color = "white"; // Border color
+joystickPuck.thickness = 2; // Border thickness
+joystickPuck.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+joystickPuck.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;*/
+
+        
+
+        /*joystickContainer.addControl(joystickPuck);
+
+        advancedTexture.addControl(joystickContainer);*/
+
         let isDraggingJoystick = false;
         let initialTouchPoint = { x: 0, y: 0 };
         let joystickDelta = { x: 0, y: 0 };
 
         
+        /*joystickContainer.onPointerDownObservable.add((eventData: BABYLON.IPointerEvent) => {
+            isDraggingJoystick = true;
+            initialTouchPoint = { x: eventData.event.clientX, y: eventData.y };
+
+            
+                pointerEvent.preventDefault(); // Prevent default behavior
+            
+
+        });*/
+
         joystickContainer.addEventListener("pointerdown", (event) => {
             isDraggingJoystick = true;
             initialTouchPoint = { x: event.clientX, y: event.clientY };
@@ -200,9 +229,6 @@ const BabylonScene = () => {
             joystickPuck.style.top = "50px";
             joystickDelta = { x: 0, y: 0 };
         });
-
-        
-
         
         joystickContainer.addEventListener("pointermove", (event) => {
             if (isDraggingJoystick) {
@@ -212,29 +238,18 @@ const BabylonScene = () => {
                 const maxDistance = 50;  
 
                 
-                /*if (distance > maxDistance) {
-                    let angle = Math.atan2(deltaY, deltaX);
-                    deltaX = Math.cos(angle) * maxDistance;
-                    deltaY = Math.sin(angle) * maxDistance;
-                }*/
-
-                
                 const angle = Math.atan2(deltaY, deltaX);
                 if (distance > maxDistance) {
                     deltaX = Math.cos(angle) * maxDistance;
                     deltaY = Math.sin(angle) * maxDistance;
                 }
-
-                
+               
                 joystickPuck.style.left = `${50 + deltaX}px`;
                 joystickPuck.style.top = `${50 + deltaY}px`;
-
-                
+ 
                 joystickDelta.x = deltaX / maxDistance;
                 joystickDelta.y = deltaY / maxDistance;
 
-                
-                //updateMovementDirection(joystickDelta);
             }
         });
 
@@ -245,6 +260,44 @@ const BabylonScene = () => {
             joystickPuck.style.top = "50px";
             joystickDelta = { x: 0, y: 0 };
         });
+
+        /*joystickContainer.onPointerMoveObservable.add((eventData: BABYLON.IPointerEvent) => {
+            if (isDraggingJoystick) {
+                const deltaX = eventData.x - initialTouchPoint.x;
+                const deltaY = eventData.y - initialTouchPoint.y;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const maxDistance = 50;
+        
+                // Constrain movement within max distance
+                if (distance > maxDistance) {
+                    const angle = Math.atan2(deltaY, deltaX);
+                    joystickDelta.x = Math.cos(angle) * maxDistance;
+                    joystickDelta.y = Math.sin(angle) * maxDistance;
+                } else {
+                    joystickDelta.x = deltaX;
+                    joystickDelta.y = deltaY;
+                }
+        
+                joystickPuck.left = `${50 + joystickDelta.x}px`; // Updating joystick position
+                joystickPuck.top = `${50 + joystickDelta.y}px`; // Updating joystick position
+        
+                // Prevent default behavior (useful for touch/mouse interactions)
+                eventData.event.preventDefault();
+            }
+        });
+        
+        // When the user releases the joystick (onPointerUp)
+        joystickContainer.onPointerUpObservable.add(() => {
+            isDraggingJoystick = false;
+            joystickPuck.left = "50px"; // Reset position
+            joystickPuck.top = "50px"; // Reset position
+            joystickDelta = { x: 0, y: 0 }; // Reset delta
+        });*/
+
+        // canvasの親要素に追加
+        if (canvas.parentElement) {
+            canvas.parentElement.appendChild(joystickContainer);
+        }
 
         
         let isRotatingCamera = false;
@@ -304,36 +357,21 @@ const BabylonScene = () => {
 
         // Debugging logs
         document.addEventListener("pointerup", (e) => console.log("Pointer up - Document", e));
-        //window.addEventListener("pointerup", (e) => console.log("Pointer up - Window", e));
         document.addEventListener("touchend", (e) => console.log("Touch end - Document", e));
-        //window.addEventListener("touchend", (e) => console.log("Touch end - Window", e));
 
         
         joystickContainer.addEventListener("pointerup", (e) => {
             console.log("Pointer up - Joystick area", e);
         });
 
-    // メッシュの読み込み
-    //let Cube = null;
-
-    //let Bdoor: BABYLON.AbstractMesh | null = null;
 
     let Bdoor: BABYLON.AbstractMesh | null | undefined;
-
-
-    //if (someCondition) {
-    //    Bdoor = mesh ?? null; // undefined の場合は null に設定
-    //  }
 
     BABYLON.SceneLoader.ImportMeshAsync("", "./scene/", "sinden.glb", scene).then((result) => {
         result.meshes.forEach((mesh) => {
             console.log("Loaded mesh name:", mesh.name);
         });
         
-        //Cube = result.meshes.find(mesh => mesh.name === "Cube.132");
-        //if (!Cube) {
-        //    console.error("Cube mesh not found in the loaded scene.");
-        //}
 
         for (let i = 0; i <= 4; i++) {
             const meshName = `Cube${i}`;
@@ -365,18 +403,15 @@ const BabylonScene = () => {
                           const pointerEvent = pointerInfo.event as PointerEvent;
                           const pointerId = pointerEvent.pointerId;
 
-                          if (Bdoor && pickedMesh === Bdoor) {//メッシュ名判定
+                          if (Bdoor && pickedMesh === Bdoor) {
                               console.log("hihatop!");
                               pickedMesh.position.y -= 0.1; 
 
-                              // Next.jsのページ遷移
+                              
                               router.push('/Bstart').catch((error: Error) => {
                                   console.error("Link failed:", error);
-                              }); // '/your-page-path' を目的のページパスに置き換える
+                              }); 
 
-                              /*hihatopaudio.play().catch((error: Error) => {
-                                  console.error("Audio failed:", error);
-                              });*/
                               pointerToKey.set(pointerId, {
                                   mesh: pickedMesh
                               });
@@ -384,31 +419,36 @@ const BabylonScene = () => {
                         }
                     }
                     break;
-                case BABYLON.PointerEventTypes.POINTERUP://クリックが離されたときの判定
-                    
+                case BABYLON.PointerEventTypes.POINTERUP:
                     
                     
                     break;
             }
         });
 
-    // シーンのレンダリング
     engine.runRenderLoop(() => {
       scene.render();
     });
 
-    // ウィンドウサイズに応じたリサイズ対応
+    
     window.addEventListener("resize", () => {
       engine.resize();
     });
 
-    // クリーンアップ
+    
     return () => {
+      window.removeEventListener('resize', () => engine.resize());
       engine.dispose();
     };
   }, []);
 
-  return <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
+  return <Scanvas ref={canvasRef} style={{ width: '100vw', height: '100vh' }} />;
 };
+
+const Scanvas = styled.canvas`
+  width: 100vw;
+  height: 100vh;
+  display: block;
+`;
 
 export default BabylonScene;

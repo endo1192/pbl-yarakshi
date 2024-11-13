@@ -61,13 +61,14 @@ export default function Home({ count, arrayn, answer }: Bques1Props) {
   return ( 
     <>
       <Link href="/">はじめに戻る</Link><br /><br /><br />
-      <p>第{Cnumber}問5、～</p><br /><br /><br />
+      <p>第{Cnumber}問5、～</p><br />
+      <p>ゲームをしていると、高額の請求が来た。個人情報を入力すれば払わなくて済むらしい。 </p><br /><br />
       <p>{Carray}</p>
       <p>{Canswer}</p>
       <li>
-      <Link href={{ pathname: '/Bans5', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢1</Link></li><br />
-      <li><Link href={{ pathname: '/Bans5', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢2</Link></li><br />
-      <li><Link href={{ pathname: '/Bans5', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢3</Link></li><br />
+      <Link href={{ pathname: '/Bans5', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>1:詐欺の可能性があるので、個人情報を入力しない。</Link></li><br />
+      <li><Link href={{ pathname: '/Bans5', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>2:お金を払わなくて良くなるので個人情報を入力する。</Link></li><br />
+      <li><Link href={{ pathname: '/Bans5', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>3:自分の情報は入力したくないので、親の情報を入力する。 </Link></li><br />
       <li><Link href={{ pathname: '/Bans5', query: { num: 4, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢4</Link>
       </li>
     </>

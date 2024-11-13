@@ -61,13 +61,14 @@ export default function Home({ count, arrayn, answer }: Bques1Props) {
   return ( 
     <>
       <Link href="/">はじめに戻る</Link><br /><br /><br />
-      <p>第{Cnumber}問2、～</p><br /><br /><br />
+      <p>第{Cnumber}問2、～</p><br />
+      <p>寝なければならない時間だが、スマホを使いたい。 </p><br /><br />
       <p>{Carray}</p>
       <p>{Canswer}</p>
       <li>
-      <Link href={{ pathname: '/Bans2', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢1</Link></li><br />
-      <li><Link href={{ pathname: '/Bans2', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢2</Link></li><br />
-      <li><Link href={{ pathname: '/Bans2', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢3</Link></li><br />
+      <Link href={{ pathname: '/Bans2', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>1:明日の学校に影響が出るためベッドに行く</Link></li><br />
+      <li><Link href={{ pathname: '/Bans2', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>2:スマホを使いたいからまだ寝ない</Link></li><br />
+      <li><Link href={{ pathname: '/Bans2', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>3:あと一時間したら、ベッドへ行く</Link></li><br />
       <li><Link href={{ pathname: '/Bans2', query: { num: 4, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢4</Link>
       </li>
     </>

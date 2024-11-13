@@ -61,13 +61,14 @@ export default function Home({ count, arrayn, answer }: Bques1Props) {
   return ( 
     <>
       <Link href="/">はじめに戻る</Link><br /><br /><br />
-      <p>第{Cnumber}問1、～</p><br /><br /><br />
+      <p>第{Cnumber}問1、～</p><br />
+      <p>歩いている時に、スマホの通知が鳴った。 </p><br /><br />
       <p>{Carray}</p>
       <p>{Canswer}</p>
       <li>
-      <Link href={{ pathname: '/Bans1', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢1</Link></li><br />
-      <li><Link href={{ pathname: '/Bans1', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢2</Link></li><br />
-      <li><Link href={{ pathname: '/Bans1', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢3</Link></li><br />
+      <Link href={{ pathname: '/Bans1', query: { num: 1, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>1:スマホを見ると危ないので、歩きながら確認はしない。</Link></li><br />
+      <li><Link href={{ pathname: '/Bans1', query: { num: 2, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>2:通知の内容が気になるので、歩きながら確認する。</Link></li><br />
+      <li><Link href={{ pathname: '/Bans1', query: { num: 3, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>3:周りに目を配り、気を付けながら確認する。</Link></li><br />
       <li><Link href={{ pathname: '/Bans1', query: { num: 4, arrayn: JSON.stringify(Carray), count: Cnumber, answer: JSON.stringify(Canswer) } }}>選択肢4</Link>
       </li>
     </>
