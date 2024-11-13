@@ -437,6 +437,9 @@ joystickPuck.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;*/
 
     
     return () => {
+      if (joystickContainer.parentElement) {
+        joystickContainer.parentElement.removeChild(joystickContainer);
+      }
       window.removeEventListener('resize', () => engine.resize());
       engine.dispose();
     };
